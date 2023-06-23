@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package distributed_automation;
+
+service AutomationService {
+  rpc print_method (ClientRequest) returns (ServerResponse) {}
+  rpc get_running_config(DeviceParameters) returns (ServerResponse) {}
+  rpc pass_object(ClientRequest) returns (ServerResponse) {}
+}
+
+message ClientRequest {
+  string data = 1;
+}
+
+message ServerResponse {
+  string result = 1;
+}
+
+message DeviceParameters {
+  string device_type = 1;
+  string ip = 2;
+  string username = 3;
+  string password = 4;
+}
+
+
