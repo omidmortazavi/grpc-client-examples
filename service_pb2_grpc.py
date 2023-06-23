@@ -19,14 +19,19 @@ class AutomationServiceStub(object):
                 request_serializer=service__pb2.ClientRequest.SerializeToString,
                 response_deserializer=service__pb2.ServerResponse.FromString,
                 )
+        self.pass_object = channel.unary_unary(
+                '/distributed_automation.AutomationService/pass_object',
+                request_serializer=service__pb2.ClientRequest.SerializeToString,
+                response_deserializer=service__pb2.ServerResponse.FromString,
+                )
         self.get_running_config = channel.unary_unary(
                 '/distributed_automation.AutomationService/get_running_config',
                 request_serializer=service__pb2.DeviceParameters.SerializeToString,
                 response_deserializer=service__pb2.ServerResponse.FromString,
                 )
-        self.pass_object = channel.unary_unary(
-                '/distributed_automation.AutomationService/pass_object',
-                request_serializer=service__pb2.ClientRequest.SerializeToString,
+        self.execute_nornir_task = channel.unary_unary(
+                '/distributed_automation.AutomationService/execute_nornir_task',
+                request_serializer=service__pb2.TaskRequest.SerializeToString,
                 response_deserializer=service__pb2.ServerResponse.FromString,
                 )
 
@@ -40,13 +45,19 @@ class AutomationServiceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def pass_object(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def get_running_config(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def pass_object(self, request, context):
+    def execute_nornir_task(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -60,14 +71,19 @@ def add_AutomationServiceServicer_to_server(servicer, server):
                     request_deserializer=service__pb2.ClientRequest.FromString,
                     response_serializer=service__pb2.ServerResponse.SerializeToString,
             ),
+            'pass_object': grpc.unary_unary_rpc_method_handler(
+                    servicer.pass_object,
+                    request_deserializer=service__pb2.ClientRequest.FromString,
+                    response_serializer=service__pb2.ServerResponse.SerializeToString,
+            ),
             'get_running_config': grpc.unary_unary_rpc_method_handler(
                     servicer.get_running_config,
                     request_deserializer=service__pb2.DeviceParameters.FromString,
                     response_serializer=service__pb2.ServerResponse.SerializeToString,
             ),
-            'pass_object': grpc.unary_unary_rpc_method_handler(
-                    servicer.pass_object,
-                    request_deserializer=service__pb2.ClientRequest.FromString,
+            'execute_nornir_task': grpc.unary_unary_rpc_method_handler(
+                    servicer.execute_nornir_task,
+                    request_deserializer=service__pb2.TaskRequest.FromString,
                     response_serializer=service__pb2.ServerResponse.SerializeToString,
             ),
     }
@@ -98,6 +114,23 @@ class AutomationService(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
+    def pass_object(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/distributed_automation.AutomationService/pass_object',
+            service__pb2.ClientRequest.SerializeToString,
+            service__pb2.ServerResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
     def get_running_config(request,
             target,
             options=(),
@@ -115,7 +148,7 @@ class AutomationService(object):
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 
     @staticmethod
-    def pass_object(request,
+    def execute_nornir_task(request,
             target,
             options=(),
             channel_credentials=None,
@@ -125,8 +158,8 @@ class AutomationService(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/distributed_automation.AutomationService/pass_object',
-            service__pb2.ClientRequest.SerializeToString,
+        return grpc.experimental.unary_unary(request, target, '/distributed_automation.AutomationService/execute_nornir_task',
+            service__pb2.TaskRequest.SerializeToString,
             service__pb2.ServerResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

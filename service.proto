@@ -4,8 +4,9 @@ package distributed_automation;
 
 service AutomationService {
   rpc print_method (ClientRequest) returns (ServerResponse) {}
-  rpc get_running_config(DeviceParameters) returns (ServerResponse) {}
   rpc pass_object(ClientRequest) returns (ServerResponse) {}
+  rpc get_running_config(DeviceParameters) returns (ServerResponse) {}
+  rpc execute_nornir_task(TaskRequest) returns (ServerResponse) {}
 }
 
 message ClientRequest {
@@ -23,4 +24,8 @@ message DeviceParameters {
   string password = 4;
 }
 
+message TaskRequest {
+  string inventory = 1;
+  string task = 2;
+}
 

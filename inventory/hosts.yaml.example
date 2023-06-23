@@ -1,0 +1,7 @@
+---
+hosts:
+  host1:
+    hostname: $HOSTNAME
+    platform: $PLATFORM
+    username: $USERNAME
+    password: $PASSWORD

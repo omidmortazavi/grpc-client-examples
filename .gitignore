@@ -1,6 +1,8 @@
 #user added
 /certificates
 *.log
+/inventory/hosts.yaml
+config.yaml
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

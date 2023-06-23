@@ -4,7 +4,9 @@ import logging
 import pickle
 import service_pb2
 import service_pb2_grpc
+import yaml
 
+from nornir import InitNornir
 from rich.logging import RichHandler
 
 
@@ -16,6 +18,15 @@ logger = logging.getLogger("client_log")
 logger.addHandler(logging.FileHandler("client.log"))
 logger.addHandler(RichHandler())
 
+# Read the YAML file
+with open('inventory/hosts.yaml', 'r') as file:
+    yaml_data = yaml.safe_load(file)
+
+# Host Values
+HOSTNAME = yaml_data['hosts']['host1']['hostname']
+PLATFORM = yaml_data['hosts']['host1']['platform']
+USERNAME = yaml_data['hosts']['host1']['username']
+PASSWORD = yaml_data['hosts']['host1']['password']
 
 class GRPCClient:
     def echo_test(self, stub):
@@ -61,12 +72,37 @@ class GRPCClient:
         """
         # Make a request to the server using the GetRunningConfig method
         request = service_pb2.DeviceParameters(
-            device_type="cisco_xe", ip="100.71.34.183", username="cisco", password="cisco"
+            device_type=PLATFORM, ip=HOSTNAME, username=USERNAME, password=PASSWORD
         )
         response = stub.get_running_config(request)
 
         # Print the response received from the server
         logger.info(f"Response from GetRunningConfig: {response.result}")
+
+    def execute_nornir_task(self, stub):
+        """Sends the Nornir inventory and task to the server for execution.
+
+        Args:
+            stub (AutomationServiceStub): The gRPC stub object.
+        """
+        # Load the Nornir inventory
+        nr = InitNornir(config_file="config.yaml")
+
+        # Serialize the Nornir inventory
+        serialized_inventory = pickle.dumps(nr.inventory)
+
+        # Convert the byte string to base64-encoded string
+        encoded_inventory = base64.b64encode(serialized_inventory).decode("utf-8")
+
+        # Specify the Nornir task to be executed
+        nornir_task = "backup_running_config"
+
+        request = service_pb2.TaskRequest(
+            inventory=encoded_inventory, task=nornir_task
+        )
+        response = stub.execute_nornir_task(request)
+        logger.info(f"Response from server: {response.result}")
+
 
     def run(self):
         """Runs the gRPC client."""
@@ -89,6 +125,9 @@ class GRPCClient:
 
         # Run Netmiko Test
         self.get_running_config(stub)
+
+        # Run Nornir Task
+        #self.execute_nornir_task(stub)
 
 
 if __name__ == "__main__":

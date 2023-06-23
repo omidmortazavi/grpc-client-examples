@@ -13,7 +13,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rservice.proto\x12\x16\x64istributed_automation\"\x1d\n\rClientRequest\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\t\" \n\x0eServerResponse\x12\x0e\n\x06result\x18\x01 \x01(\t\"W\n\x10\x44\x65viceParameters\x12\x13\n\x0b\x64\x65vice_type\x18\x01 \x01(\t\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x10\n\x08username\x18\x03 \x01(\t\x12\x10\n\x08password\x18\x04 \x01(\t2\xbe\x02\n\x11\x41utomationService\x12_\n\x0cprint_method\x12%.distributed_automation.ClientRequest\x1a&.distributed_automation.ServerResponse\"\x00\x12h\n\x12get_running_config\x12(.distributed_automation.DeviceParameters\x1a&.distributed_automation.ServerResponse\"\x00\x12^\n\x0bpass_object\x12%.distributed_automation.ClientRequest\x1a&.distributed_automation.ServerResponse\"\x00\x62\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rservice.proto\x12\x16\x64istributed_automation\"\x1d\n\rClientRequest\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\t\" \n\x0eServerResponse\x12\x0e\n\x06result\x18\x01 \x01(\t\"W\n\x10\x44\x65viceParameters\x12\x13\n\x0b\x64\x65vice_type\x18\x01 \x01(\t\x12\n\n\x02ip\x18\x02 \x01(\t\x12\x10\n\x08username\x18\x03 \x01(\t\x12\x10\n\x08password\x18\x04 \x01(\t\".\n\x0bTaskRequest\x12\x11\n\tinventory\x18\x01 \x01(\t\x12\x0c\n\x04task\x18\x02 \x01(\t2\xa4\x03\n\x11\x41utomationService\x12_\n\x0cprint_method\x12%.distributed_automation.ClientRequest\x1a&.distributed_automation.ServerResponse\"\x00\x12^\n\x0bpass_object\x12%.distributed_automation.ClientRequest\x1a&.distributed_automation.ServerResponse\"\x00\x12h\n\x12get_running_config\x12(.distributed_automation.DeviceParameters\x1a&.distributed_automation.ServerResponse\"\x00\x12\x64\n\x13\x65xecute_nornir_task\x12#.distributed_automation.TaskRequest\x1a&.distributed_automation.ServerResponse\"\x00\x62\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -27,6 +27,8 @@ if _descriptor._USE_C_DESCRIPTORS == False:
   _globals['_SERVERRESPONSE']._serialized_end=104
   _globals['_DEVICEPARAMETERS']._serialized_start=106
   _globals['_DEVICEPARAMETERS']._serialized_end=193
-  _globals['_AUTOMATIONSERVICE']._serialized_start=196
-  _globals['_AUTOMATIONSERVICE']._serialized_end=514
+  _globals['_TASKREQUEST']._serialized_start=195
+  _globals['_TASKREQUEST']._serialized_end=241
+  _globals['_AUTOMATIONSERVICE']._serialized_start=244
+  _globals['_AUTOMATIONSERVICE']._serialized_end=664
 # @@protoc_insertion_point(module_scope)

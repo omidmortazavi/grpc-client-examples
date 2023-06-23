@@ -91,6 +91,24 @@ class AutomationServiceServicer(service_pb2_grpc.AutomationServiceServicer):
 
         return service_pb2.ServerResponse(result=result)
 
+    def execute_nornir_task(self, request, context):
+        """Deserializes the Nornir inventory, performs the Nornir task, and sends the result back to the client."""
+        # Decode the base64-encoded inventory
+        decoded_inventory = base64.b64decode(request.inventory)
+
+        # Deserialize the inventory
+        deserialized_inventory = pickle.loads(decoded_inventory)
+
+        inventory_string = deserialized_inventory.dict()
+
+        # Print the Nornir inventory received from the client
+        logger.info(f"Nornir inventory received from client: {inventory_string}")
+
+        # TODO: Execute the Nornir task
+
+        # Return the response
+        response = service_pb2.ServerResponse(result="Nornir task executed successfully!")
+        return response
 
 def serve():
     """Starts the gRPC server and listens for incoming requests."""
